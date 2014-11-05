@@ -35,7 +35,7 @@ public:
     }
     bool lookUp(int target)
     {
-        if (conductor->getLeft() && conductor->getRight() == NULL)
+        if (conductor == NULL)//->getLeft() && conductor->getRight() == NULL)
         {
             return false;
         }
@@ -61,9 +61,7 @@ public:
 int main()
 {
     BinarySearchTree BST(5);
-    if(BST.lookUp(6))
-    { 
-        cout << "working" << endl;
-    }
+    cout << "lookUp returned: ";
+    cout << BST.lookUp(6) << endl;;
     return 0;
 }
