@@ -32,9 +32,11 @@ public:
     {
         root = new Node(rootData);
         conductor = root;
+        maxDepthCount = 1;
     }
     bool lookUp(int target)
     {
+        cout << "\npassed " << conductor->getData() << endl;
         if (conductor == NULL)  //->getLeft() && conductor->getRight() == NULL)
         {
             conductor = root;
@@ -62,98 +64,67 @@ public:
     {
         if (conductor == NULL)
         {
-            cout << "conductor is NULL" << endl;
             conductor = root;
             return 0;
         }
         else if (conductor->getLeft() == NULL && rootData < conductor->getData())
         {
-            cout << "conductor = " << conductor->getData() << endl;
             conductor->setLeft(new Node(rootData));
-            cout << "setLeft" << endl;
-            //return insert(rootData);
             conductor = root;
             return 1;
         }
         else if (conductor->getRight() == NULL && rootData >= conductor->getData())
         {
-            cout << "conductor = " << conductor->getData() << endl;
             conductor->setRight(new Node(rootData));
-            cout << "setRight" << endl;
-            //return insert(rootData);
             conductor = root;
             return 2;
         }
         else if (conductor->getLeft() != NULL && rootData < conductor->getData())
         {
-            cout << "conductor = " << conductor->getData() << endl;
             conductor = conductor->getLeft();
-            cout << "went left" << endl;
             return insert(rootData);
         }
         else if (conductor->getRight() != NULL && rootData >= conductor->getData())
         {
-            cout << "conductor = " << conductor->getData() << endl;
             conductor = conductor->getRight();
-            cout << "went right" << endl;
             return insert(rootData);
         }
+        return 0;
     }
+    /*
     int maxDepth()
     {
-        maxDepthCount += 1;
-        /*
+        //cout << "\npassed " << conductor->getData() << endl;
         if (conductor == NULL)
         {
             return maxDepthCount;
         }
+        else if (conductor->getLeft() == NULL)
+        {
+            maxDepthCount += 1;
+            conductor = conductor->getLeft();
+            return maxDepthCount;
+        }
         else if (conductor->getLeft() != NULL)
         {
-            cout << "passed left " << conductor->getData() << endl;
+            maxDepthCount += 1;
             conductor = conductor->getLeft();
-            maxDepth();
+            return maxDepth();
         }
-        else //if (conductor->getRight() == NULL)
+        else if (conductor->getRight() == NULL)
         {
-            cout << "passed right " << conductor->getData() << endl;
+            maxDepthCount += 1;
             conductor = conductor->getRight();
-            maxDepth();
+            return maxDepth();
         }
-        return maxDepthCount;
-        */
-        //cout << "working";
-        if (conductor->getLeft() == NULL)
+        else if (conductor->getRight() != NULL)
         {
-            cout << conductor->getData() << endl;
-            //cout << "segfault after getLeft()" << endl;
-            if (conductor->getRight() == NULL)
-            {
-                cout << conductor->getData() << endl;
-                //cout << "segfault after getRight()" << endl;
-                conductor = root; 
-                return maxDepthCount;
-            }
-            else 
-            {
-                cout << conductor->getData() << endl;
-                //cout << "segfault after getRight() != NULL" << endl;
-                conductor = conductor->getRight();
-                maxDepth();
-            }
+            maxDepthCount += 1;
+            conductor = conductor->getRight();
+            return maxDepth();
         }
-        else
-        {
-            //cout << "segfault after else" << endl;
-            cout << conductor->getData() << endl;
-            conductor = conductor->getLeft();
-            maxDepth();
-        }
-        return maxDepthCount;
-    } 
-    void reset()
-    {
-        conductor = root;
     }
+    */
 private:
     Node* root; // root node
     Node* conductor; // navigates search tree
@@ -163,7 +134,7 @@ private:
 };
 int main()
 {
-    int lookUpVar = 3;
+    int lookUpVar = 12;
     BinarySearchTree BST(5);
     cout << "---------- 7 ----------" << endl;
     cout << BST.insert(7) << endl;
@@ -177,5 +148,6 @@ int main()
     cout << "---------- 12 ---------" << endl;
     cout << BST.insert(12) << endl;
     cout << "lookUp " << lookUpVar << " returns " << BST.lookUp(lookUpVar) << endl;
+    cout << "maxDepth returns " << BST.maxDepth() << endl;
     return 0;
 }
