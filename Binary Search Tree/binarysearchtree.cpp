@@ -64,26 +64,29 @@ public:
         if (conductor == NULL)
         {
             conductor = root;
+            sizeCount++;
             return 0;
         }
-        else if (conductor->getLeft() == NULL && rootData < conductor->getData())
+        else if (conductor->getLeft() == NULL && rootData <= conductor->getData())
         {
             conductor->setLeft(new Node(rootData));
             conductor = root;
+            sizeCount++;
             return 1;
         }
-        else if (conductor->getRight() == NULL && rootData >= conductor->getData())
+        else if (conductor->getRight() == NULL && rootData > conductor->getData())
         {
             conductor->setRight(new Node(rootData));
             conductor = root;
+            sizeCount++;
             return 2;
         }
-        else if (conductor->getLeft() != NULL && rootData < conductor->getData())
+        else if (conductor->getLeft() != NULL && rootData <= conductor->getData())
         {
             conductor = conductor->getLeft();
             return insert(rootData);
         }
-        else if (conductor->getRight() != NULL && rootData >= conductor->getData())
+        else if (conductor->getRight() != NULL && rootData > conductor->getData())
         {
             conductor = conductor->getRight();
             return insert(rootData);
@@ -140,6 +143,7 @@ public:
         }
         else
         {
+            conductor = root;
             return maxValueNum;
         }
     }
@@ -153,46 +157,12 @@ public:
         }
         else
         {
+            conductor = root;
             return maxValueNum;
         }
     }
     int size()
     {
-        if (conductor->getLeft() == NULL)
-        {   
-            //cout << "went here 1" << endl;
-            if (conductor->getRight() == NULL)
-            {
-                //cout << "went here 2" << endl;
-                conductor = root;
-                return sizeCount;
-            }
-            else
-            {
-                //cout << "went here 3" << endl;
-                sizeCount++;
-                conductor = conductor->getRight();
-                return maxDepth();
-            }
-        }
-        else if (conductor->getLeft() != NULL)
-        {
-            if (conductor->getRight() == NULL)
-            {    
-                //cout << "went here 4" << endl;
-                conductor = conductor->getLeft();
-                sizeCount++;
-                return size();
-            }
-            else
-            {
-                //cout << "went here 5" << endl;
-                conductor = conductor->getRight();
-                sizeCount++;
-                return size();
-            }
-        }
-        //cout << "went here 6" << endl;
         return sizeCount;
     }
 private:
@@ -207,24 +177,13 @@ int main()
 {
     int lookUpVar = 12;
     BinarySearchTree BST(5);
-    /*
-    cout << "---------- 7 ----------" << endl;
-    cout << BST.insert(7) << endl;
-    cout << "---------- 3 ----------" << endl;
-    cout << BST.insert(3) << endl;
-    cout << "---------- 9 ----------" << endl;
-    cout << BST.insert(9) << endl;
-    cout << "---------- 9 ----------" << endl;
-    cout << BST.insert(9) << endl;
-    cout << "---------- 12 ---------" << endl;
-    cout << BST.insert(12) << endl;
-    */
     BST.insert(7);
     BST.insert(3);
     BST.insert(9);
     BST.insert(9);
     BST.insert(12);
     BST.insert(90);
+    BST.insert(99);
     cout << "lookUp " << lookUpVar << " returns " << BST.lookUp(lookUpVar) << endl;
     cout << "maxDepth returns " << BST.maxDepth() << endl;
     cout << "minValue " << BST.minValue() << endl;
